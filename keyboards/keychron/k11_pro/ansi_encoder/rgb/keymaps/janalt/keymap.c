@@ -29,7 +29,7 @@ enum layers{
 // tap dance umlaut functions
 // idea is to follow this manual and https://docs.qmk.fm/#/feature_tap_dance
 // register on one function per umlaut to register an KC_ALTGR and A/Y/O/S which
-// when the OS is set to US intl. will produce umlaute. same f 
+// when the OS is set to US intl. will produce umlaute. same f
 // the same can eventually be used for things likme []{};: etc../
 // or we use KEY_OVERRIDE_ENABLE = yes  - see here https://docs.qmk.fm/#/feature_key_overrides
 
@@ -61,8 +61,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             case 1:
                 rgb_matrix_set_color_all(RGB_CYAN);
                 break;
-            default:    
-                rgb_matrix_mode(RGB_MATRIX_ALPHAS_MODS);
+            default:
                 rgb_matrix_set_color_all(RGB_BLUE);
                 break;
         }
@@ -84,7 +83,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 //             case 1:
 //                 rgb_matrix_set_color(i, RGB_CYAN);
 //                 break;
-//             default:    
+//             default:
 //                 rgb_matrix_mode(RGB_MATRIX_ALPHAS_MODS);
 //                 rgb_matrix_set_color(i, RGB_ORANGE);
 //                 break;
@@ -196,7 +195,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_BSPC, TD(TD_MAC_AUML_A),     KC_R,     TD(TD_MAC_SZLIG_S),    KC_T,    KC_D,              KC_H,    KC_N,    KC_E,    KC_I,     TD(TD_MAC_OUML_O),  KC_QUOT,  KC_ENT,           KC_HOME,
         KC_LSFT,           KC_Z,     KC_X,    KC_C,    KC_V,    KC_B,     KC_B,    KC_K,    KC_M,    KC_COMM,  KC_DOT,   KC_SLSH,  KC_RSFT, KC_UP,
         KC_LCMMD, KC_LCTL, KC_LOPTN,          LT(MAC_FN1,KC_SPC),           MO(MAC_FN1), MO(FN2),        LT(MAC_FN1,KC_SPC),            KC_RCMMD,           KC_LEFT, KC_DOWN, KC_RGHT),
-    
+
     [WIN_BASE] = LAYOUT_69_ansi(
         KC_ESC,  KC_1,     KC_2,     KC_3,    KC_4,    KC_5,    KC_6,     KC_7,    KC_8,    KC_9,    KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,          KC_MUTE,
         KC_TAB,  KC_Q,     KC_W,     KC_F,    KC_P,    KC_G,    KC_J,     KC_L,    TD(TD_WIN_UUML_Y),    KC_Y,    KC_SCLN,     KC_LBRC,  KC_RBRC,  KC_BSLS,          KC_DEL,
