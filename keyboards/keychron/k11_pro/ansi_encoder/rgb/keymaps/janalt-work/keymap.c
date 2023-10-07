@@ -59,7 +59,6 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_WIN_SZLIG_S] = ACTION_TAP_DANCE_DOUBLE(KC_S, RALT(KC_S)),
 };
 
-
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [MAC_BASE] = LAYOUT_69_ansi(
