@@ -52,27 +52,89 @@ enum custom_keycodes {
 
 
 /// Layer Coloring https://docs.qmk.fm/#/feature_rgb_matrix?id=indicator-examples
+// bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+
+//    switch(get_highest_layer(layer_state|default_layer_state)) {
+//             case 2:
+//                 rgb_matrix_set_color_all(RGB_PINK);
+//                 break;
+//             case 1:
+//                 rgb_matrix_set_color_all(RGB_CYAN);
+//                 break;
+//             default:
+//                 rgb_matrix_set_color_all(RGB_BLUE);
+//                 break;
+//         }
+
+//     for (uint8_t i = led_min; i < led_max; i++) {
+//         if (HAS_FLAGS(g_led_config.flags[i], 0x01)) { // 0x01 == LED_FLAG_MODIFIER
+//             rgb_matrix_set_color(i, RGB_ORANGE);
+//         }
+//     }
+//     return false;
+// }
+
+// alternative key coloring switch by layer from here https://www.reddit.com/r/olkb/comments/kpro3p/how_to_use_layer_indicators_with_rgb_matrix_for/
+
+
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-
-   switch(get_highest_layer(layer_state|default_layer_state)) {
-            case 2:
-                rgb_matrix_set_color_all(RGB_PINK);
-                break;
-            case 1:
-                rgb_matrix_set_color_all(RGB_CYAN);
-                break;
-            default:
-                rgb_matrix_set_color_all(RGB_BLUE);
-                break;
-        }
-
-    for (uint8_t i = led_min; i < led_max; i++) {
-        if (HAS_FLAGS(g_led_config.flags[i], 0x01)) { // 0x01 == LED_FLAG_MODIFIER
-            rgb_matrix_set_color(i, RGB_ORANGE);
-        }
+    uint8_t layer = biton32(layer_state);
+    switch (layer) {
+        case 0: 
+        //mac
+            rgb_matrix_set_color_all(RGB_WHITE);
+            for (uint8_t i = led_min; i < led_max; i++) {
+                if (HAS_FLAGS(g_led_config.flags[i], 0x01)) { // 0x01 == LED_FLAG_MODIFIER
+                    rgb_matrix_set_color(i, RGB_TEAL);
+                }
+            }
+            return true;
+        break;
+        case 1:
+        //win
+            rgb_matrix_set_color_all(RGB_WHITE);
+            for (uint8_t i = led_min; i < led_max; i++) {
+                if (HAS_FLAGS(g_led_config.flags[i], 0x01)) { // 0x01 == LED_FLAG_MODIFIER
+                    rgb_matrix_set_color(i, RGB_CYAN);
+                }
+            }
+            return true;
+        break;
+        case 2:
+        //mac fn
+            rgb_matrix_set_color_all(RGB_WHITE);
+            for (uint8_t i = led_min; i < led_max; i++) {
+                if (HAS_FLAGS(g_led_config.flags[i], 0x01)) { // 0x01 == LED_FLAG_MODIFIER
+                    rgb_matrix_set_color(i, RGB_ORANGE);
+                }
+            }
+            return true;
+        break;
+        case 3:
+        //win fn
+            rgb_matrix_set_color_all(RGB_WHITE);
+            for (uint8_t i = led_min; i < led_max; i++) {
+                if (HAS_FLAGS(g_led_config.flags[i], 0x01)) { // 0x01 == LED_FLAG_MODIFIER
+                    rgb_matrix_set_color(i, RGB_RED);
+                }
+            }
+            return true;
+        break;
+        case 4:
+        //win fn
+            rgb_matrix_set_color_all(RGB_RED);
+            for (uint8_t i = led_min; i < led_max; i++) {
+                if (HAS_FLAGS(g_led_config.flags[i], 0x01)) { // 0x01 == LED_FLAG_MODIFIER
+                    rgb_matrix_set_color(i, RGB_WHITE);
+                }
+            }
+            return true;
+        break;
+        default:
+            return true;
     }
-    return false;
 }
+
 
 // bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 //     for (uint8_t i = led_min; i < led_max; i++) {
