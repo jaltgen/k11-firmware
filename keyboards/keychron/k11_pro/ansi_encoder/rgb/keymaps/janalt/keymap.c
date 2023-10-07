@@ -41,8 +41,6 @@ const key_override_t **key_overrides = (const key_override_t *[]){
 };
 
 
-<<<<<<< HEAD:keyboards/keychron/k11_pro/ansi_encoder/rgb/keymaps/janalt-work/keymap.c
-=======
 /// register custom keycodes to emulate umlaut behavior on Mac using the same mod dance technique as on windows
 // enum custom_keycodes {
 //     MAC_OUML_O,
@@ -56,7 +54,7 @@ const key_override_t **key_overrides = (const key_override_t *[]){
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     uint8_t layer = biton32(layer_state);
     switch (layer) {
-        case 0: 
+        case 0:
         //mac
             rgb_matrix_set_color_all(RGB_TEAL);
             for (uint8_t i = led_min; i < led_max; i++) {
@@ -111,86 +109,18 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     }
 }
 
-// crating cords to type Mac OS US. Intl. umlaut codes (LAlt+U - *letter*)
-
-// bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-//     switch (keycode) {
-//         case MAC_OUML_O:
-//             if (record->event.pressed) {
-//                 // Simulate pressing and holding Alt+U
-//                 register_code(KC_LALT);
-//                 register_code(KC_U);
-
-//                 // Release Alt+U
-//                 unregister_code(KC_LALT);
-//                 unregister_code(KC_U);
-
-//                 // Send the desired letter (e.g., 'A')
-//                 register_code(KC_O);
-//                 unregister_code(KC_O);
-//             }
-//             break;
-//         case MAC_AUML_A:
-//             if (record->event.pressed) {
-//                 // Simulate pressing and holding Alt+U
-//                 register_code(KC_LALT);
-//                 register_code(KC_U);
-
-//                 // Release Alt+U
-//                 unregister_code(KC_LALT);
-//                 unregister_code(KC_U);
-
-//                 // Send the desired letter (e.g., 'A')
-//                 register_code(KC_A);
-//                 unregister_code(KC_A);
-//             }
-//             break;
-//         case MAC_UUML_U:
-//             if (record->event.pressed) {
-//                 // Simulate pressing and holding Alt+U
-//                 register_code(KC_LALT);
-//                 register_code(KC_U);
-
-//                 // Release Alt+U
-//                 unregister_code(KC_LALT);
-//                 unregister_code(KC_U);
-
-//                 // Send the desired letter (e.g., 'A')
-//                 register_code(KC_U);
-//                 unregister_code(KC_U);
-//             }
-//             break;
-//         case MAC_SZLIG_S:
-//             if (record->event.pressed) {
-//                 // Simulate pressing and holding Alt+S
-//                 register_code(KC_LALT);
-//                 register_code(KC_S);
-
-//                 // Release Alt+U
-//                 unregister_code(KC_LALT);
-//                 unregister_code(KC_S);
-//             }
-//             break;
-//     }
-//     return true;
-// }
 
 
-
->>>>>>> origin/k11-janalt-init:keyboards/keychron/k11_pro/ansi_encoder/rgb/keymaps/janalt/keymap.c
 // Tap Dance declarations
 enum {
     TD_WIN_OUML_P,
     TD_WIN_AUML_Q,
     TD_WIN_UUML_Y,
     TD_WIN_SZLIG_S,
-<<<<<<< HEAD:keyboards/keychron/k11_pro/ansi_encoder/rgb/keymaps/janalt-work/keymap.c
-=======
     // TD_MAC_OUML_O,
     // TD_MAC_AUML_A,
     // TD_MAC_UUML_U,
     // TD_MAC_SZLIG_S,
->>>>>>> origin/k11-janalt-init:keyboards/keychron/k11_pro/ansi_encoder/rgb/keymaps/janalt/keymap.c
 };
 
 // Tap Dance definitions
@@ -201,13 +131,10 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_WIN_AUML_Q] = ACTION_TAP_DANCE_DOUBLE(KC_A, RALT(KC_Q)),
     [TD_WIN_UUML_Y] = ACTION_TAP_DANCE_DOUBLE(KC_U, RALT(KC_Y)),
     [TD_WIN_SZLIG_S] = ACTION_TAP_DANCE_DOUBLE(KC_S, RALT(KC_S)),
-<<<<<<< HEAD:keyboards/keychron/k11_pro/ansi_encoder/rgb/keymaps/janalt-work/keymap.c
-=======
     // [TD_MAC_OUML_O] = ACTION_TAP_DANCE_DOUBLE(KC_O, MAC_OUML_O),
     // [TD_MAC_AUML_A] = ACTION_TAP_DANCE_DOUBLE(KC_A, MAC_AUML_A),
     // [TD_MAC_UUML_U] = ACTION_TAP_DANCE_DOUBLE(KC_U, MAC_UUML_U),
     // [TD_MAC_SZLIG_S] = ACTION_TAP_DANCE_DOUBLE(KC_S, MAC_SZLIG_S),
->>>>>>> origin/k11-janalt-init:keyboards/keychron/k11_pro/ansi_encoder/rgb/keymaps/janalt/keymap.c
 };
 
 // clang-format off
@@ -221,13 +148,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [WIN_BASE] = LAYOUT_69_ansi(
         KC_ESC,  KC_1,     KC_2,     KC_3,    KC_4,    KC_5,    KC_6,     KC_7,    KC_8,    KC_9,    KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,          KC_MUTE,
-<<<<<<< HEAD:keyboards/keychron/k11_pro/ansi_encoder/rgb/keymaps/janalt-work/keymap.c
-        KC_TAB,  KC_Q,     KC_W,     KC_F,    KC_P,    KC_G,    KC_J,     KC_L,    TD(TD_WIN_UUML_Y),    KC_Y,    KC_SCLN,     KC_LBRC,  KC_RBRC,  KC_BSLS,          KC_DEL,
-        KC_BSPC, TD(TD_WIN_AUML_Q),  KC_R,     TD(TD_WIN_SZLIG_S),    KC_T,    KC_D,              KC_H,    KC_N,    KC_E,    KC_I,     TD(TD_WIN_OUML_P),  KC_QUOT,  KC_ENT,           KC_HOME,
-=======
         KC_TAB,  KC_Q,     KC_W,     KC_F,    KC_P,    KC_G,    KC_J,     KC_L,    KC_U,    KC_Y,    KC_SCLN,     KC_LBRC,  KC_RBRC,  KC_BSLS,          KC_DEL,
         KC_BSPC, KC_A,     KC_R,     KC_S,    KC_T,    KC_D,              KC_H,    KC_N,    KC_E,    KC_I,     KC_O,  KC_QUOT,  KC_ENT,           KC_HOME,
->>>>>>> origin/k11-janalt-init:keyboards/keychron/k11_pro/ansi_encoder/rgb/keymaps/janalt/keymap.c
         KC_LSFT,           KC_Z,     KC_X,    KC_C,    KC_V,    KC_B,     KC_B,    KC_K,    KC_M,    KC_COMM,  KC_DOT,   KC_SLSH,  KC_RSFT, KC_UP,
         KC_LCTL, KC_LWIN,  KC_LALT,  LT(WIN_FN1,KC_SPC),           MO(WIN_FN1), MO(FN2),       LT(WIN_FN1,KC_SPC),            KC_RALT,            KC_LEFT, KC_DOWN, KC_RGHT),
 
