@@ -16,6 +16,13 @@
 
 #pragma once
 
+
+#define RGB_WINDOWS     0x0E, 0x79, 0xB2 // #0E79B2 Honolulu
+#define RGB_ROSE       0xBF, 0x13, 0x63 // #BF1363 Rose
+#define RGB_CARROT        0xf3, 0x92, 0x37 // #f39237 Carrot
+#define RGB_MAC         0x82, 0xFF, 0x65 // ##82ff65 Tanne
+
+
 #ifdef RGB_MATRIX_ENABLE
 /* RGB Matrix Driver Configuration */
 #    define DRIVER_COUNT 2
