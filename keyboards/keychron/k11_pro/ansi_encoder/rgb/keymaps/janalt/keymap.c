@@ -22,7 +22,6 @@ enum layers{
     MAC_FN1,
     WIN_FN1,
     FN2,
-    GAME,
 };
 
 
