@@ -22,6 +22,7 @@ enum layers{
     MAC_FN1,
     WIN_FN1,
     FN2,
+    GAME,
 };
 
 
@@ -44,9 +45,8 @@ const key_override_t **key_overrides = (const key_override_t *[]){
 /// register custom keycodes to emulate umlaut behavior on Mac using the same mod dance technique as on windows
 enum custom_keycodes {
     MAC_OUML_O,
-    // MAC_AUML_A,
-    // MAC_UUML_U,
-    // MAC_SZLIG_S,
+    MAC_AUML_A,
+    MAC_UUML_U,
 };
 
 
@@ -132,48 +132,37 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_code(KC_O);
             }
             break;
-//         case MAC_AUML_A:
-//             if (record->event.pressed) {
-//                 // Simulate pressing and holding Alt+U
-//                 register_code(KC_LALT);
-//                 register_code(KC_U);
+        case MAC_AUML_A:
+            if (record->event.pressed) {
+                // Simulate pressing and holding Alt+U
+                register_code(KC_LALT);
+                register_code(KC_U);
 
-//                 // Release Alt+U
-//                 unregister_code(KC_LALT);
-//                 unregister_code(KC_U);
+                // Release Alt+U
+                unregister_code(KC_LALT);
+                unregister_code(KC_U);
 
-//                 // Send the desired letter (e.g., 'A')
-//                 register_code(KC_A);
-//                 unregister_code(KC_A);
-//             }
-//             break;
-//         case MAC_UUML_U:
-//             if (record->event.pressed) {
-//                 // Simulate pressing and holding Alt+U
-//                 register_code(KC_LALT);
-//                 register_code(KC_U);
+                // Send the desired letter (e.g., 'A')
+                register_code(KC_A);
+                unregister_code(KC_A);
+            }
+            break;
+        case MAC_UUML_U:
+            if (record->event.pressed) {
+                // Simulate pressing and holding Alt+U
+                register_code(KC_LALT);
+                register_code(KC_U);
 
-//                 // Release Alt+U
-//                 unregister_code(KC_LALT);
-//                 unregister_code(KC_U);
+                // Release Alt+U
+                unregister_code(KC_LALT);
+                unregister_code(KC_U);
 
-//                 // Send the desired letter (e.g., 'A')
-//                 register_code(KC_U);
-//                 unregister_code(KC_U);
-//             }
-//             break;
-//         case MAC_SZLIG_S:
-//             if (record->event.pressed) {
-//                 // Simulate pressing and holding Alt+S
-//                 register_code(KC_LALT);
-//                 register_code(KC_S);
-
-//                 // Release Alt+U
-//                 unregister_code(KC_LALT);
-//                 unregister_code(KC_S);
-//             }
-//             break;
-    // }
+                // Send the desired letter (e.g., 'A')
+                register_code(KC_U);
+                unregister_code(KC_U);
+            }
+            break;
+    }
     return true;
 }
 
@@ -199,11 +188,9 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_WIN_OUML_P] = ACTION_TAP_DANCE_DOUBLE(KC_O, RALT(KC_P)),
     [TD_WIN_AUML_Q] = ACTION_TAP_DANCE_DOUBLE(KC_A, RALT(KC_Q)),
     [TD_WIN_UUML_Y] = ACTION_TAP_DANCE_DOUBLE(KC_U, RALT(KC_Y)),
-    // [TD_WIN_SZLIG_S] = ACTION_TAP_DANCE_DOUBLE(KC_S, RALT(KC_S)),
     [TD_MAC_OUML_O] = ACTION_TAP_DANCE_DOUBLE(KC_O, MAC_OUML_O),
     // [TD_MAC_AUML_A] = ACTION_TAP_DANCE_DOUBLE(KC_A, MAC_AUML_A),
     // [TD_MAC_UUML_U] = ACTION_TAP_DANCE_DOUBLE(KC_U, MAC_UUML_U),
-    // [TD_MAC_SZLIG_S] = ACTION_TAP_DANCE_DOUBLE(KC_S, MAC_SZLIG_S),
 };
 
 // clang-format off
@@ -251,6 +238,6 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
     [WIN_BASE] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU)},
     [MAC_FN1]  = { ENCODER_CCW_CW(RGB_VAD, RGB_VAI)},
     [WIN_FN1]  = { ENCODER_CCW_CW(RGB_VAD, RGB_VAI)},
-    [FN2]      = { ENCODER_CCW_CW(_______, _______)},
-};
+    [FN2]      = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU)},
+    };
 #endif // ENCODER_MAP_ENABLE
