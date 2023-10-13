@@ -42,12 +42,12 @@ const key_override_t **key_overrides = (const key_override_t *[]){
 
 
 /// register custom keycodes to emulate umlaut behavior on Mac using the same mod dance technique as on windows
-// enum custom_keycodes {
-//     MAC_OUML_O,
-//     MAC_AUML_A,
-//     MAC_UUML_U,
-//     MAC_SZLIG_S,
-// };
+enum custom_keycodes {
+    MAC_OUML_O,
+    // MAC_AUML_A,
+    // MAC_UUML_U,
+    // MAC_SZLIG_S,
+};
 
 
 
