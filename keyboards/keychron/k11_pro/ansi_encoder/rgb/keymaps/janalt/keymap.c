@@ -22,8 +22,26 @@ enum layers{
     MAC_FN1,
     WIN_FN1,
     FN2,
-    GAME,
-};
+} td_state_t;
+
+typedef struct {
+    bool is_press_action;
+    td_state_t state;
+} td_tap_t;
+
+typedef enum{
+    TD_MAC_OUML_O_SINGLE,
+    TD_MAC_OUML_O_DOUBLE,
+    TD_UNKNOWN,
+    TD_NONE,
+}
+// Function associated with all tap dances
+td_state_t cur_dance(tap_dance_state_t *state);
+
+
+// Functions associated with individual tap dances
+void o_finished(tap_dance_state_t *state, void *user_data);
+void o_reset(tap_dance_state_t *state, void *user_data);
 
 
 // tap dance umlaut functions
@@ -38,18 +56,8 @@ const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC
 // This globally defines all key overrides to be used
 const key_override_t **key_overrides = (const key_override_t *[]){
     &delete_key_override,
-    NULL // Null terminate the array of overrides!
+    NULL // Null terminate the array of overrides!}
 };
-
-
-/// register custom keycodes to emulate umlaut behavior on Mac using the same mod dance technique as on windows
-enum custom_keycodes {
-    MAC_OUML_O,
-    MAC_AUML_A,
-    MAC_UUML_U,
-};
-
-
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     uint8_t layer = biton32(layer_state);
@@ -110,62 +118,85 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         break;
         default:
             return true;
-    }
-}
+    };
+};
 
 // crating cords to type Mac OS US. Intl. umlaut codes (LAlt+U - *letter*)
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case MAC_OUML_O:
-            if (record->event.pressed) {
-                // Simulate pressing and holding Alt+U
-                register_code(KC_LALT);
-                register_code(KC_U);
+// bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+//     switch (keycode) {
+//         case MAC_OUML_O:
+//             if (record->event.pressed) {
+//                 // Simulate pressing and holding Alt+U
+//                 register_code(KC_LALT);
+//                 register_code(KC_U);
 
-                // Release Alt+U
-                unregister_code(KC_LALT);
-                unregister_code(KC_U);
+//                 // Release Alt+U
+//                 unregister_code(KC_LALT);
+//                 unregister_code(KC_U);
 
-                // Send the desired letter (e.g., 'A')
-                register_code(KC_O);
-                unregister_code(KC_O);
-            }
-            break;
-        case MAC_AUML_A:
-            if (record->event.pressed) {
-                // Simulate pressing and holding Alt+U
-                register_code(KC_LALT);
-                register_code(KC_U);
+//                 // Send the desired letter (e.g., 'A')
+//                 register_code(KC_O);
+//                 unregister_code(KC_O);
+//             }
+//             break;
+//         case MAC_AUML_A:
+//             if (record->event.pressed) {
+//                 // Simulate pressing and holding Alt+U
+//                 register_code(KC_LALT);
+//                 register_code(KC_U);
 
-                // Release Alt+U
-                unregister_code(KC_LALT);
-                unregister_code(KC_U);
+//                 // Release Alt+U
+//                 unregister_code(KC_LALT);
+//                 unregister_code(KC_U);
 
-                // Send the desired letter (e.g., 'A')
-                register_code(KC_A);
-                unregister_code(KC_A);
-            }
-            break;
-        case MAC_UUML_U:
-            if (record->event.pressed) {
-                // Simulate pressing and holding Alt+U
-                register_code(KC_LALT);
-                register_code(KC_U);
+//                 // Send the desired letter (e.g., 'A')
+//                 register_code(KC_A);
+//                 unregister_code(KC_A);
+//             }
+//             break;
+//         case MAC_UUML_U:
+//             if (record->event.pressed) {
+//                 // Simulate pressing and holding Alt+U
+//                 register_code(KC_LALT);
+//                 register_code(KC_U);
 
-                // Release Alt+U
-                unregister_code(KC_LALT);
-                unregister_code(KC_U);
+//                 // Release Alt+U
+//                 unregister_code(KC_LALT);
+//                 unregister_code(KC_U);
 
-                // Send the desired letter (e.g., 'A')
-                register_code(KC_U);
-                unregister_code(KC_U);
-            }
-            break;
+//                 // Send the desired letter (e.g., 'A')
+//                 register_code(KC_U);
+//                 unregister_code(KC_U);
+//             }
+//             break;
+//     }
+//     return true;
+// };
+
+
+void mac_ouml_func(tap_dance_state_t *state, void *user_data) {
+    if (state->count >= 2) {
+        //Simulate pressing and holding Alt+U
+        register_code(KC_LALT);
+        register_code(KC_U);
+
+        // Release Alt+U
+        unregister_code(KC_LALT);
+        unregister_code(KC_U);
+
+        // Send the desired letter (e.g., 'A')
+        register_code(KC_O);
+        unregister_code(KC_O);
+        reset_tap_dance(state);
     }
-    return true;
-}
 
+    switch (state->count) {
+        case 1:
+            register_code(KC_O);
+            unregister_code(KC_O);
+            reset_tap_dance(state);
+}
 
 // Tap Dance declarations
 enum {
@@ -173,8 +204,8 @@ enum {
     TD_WIN_OUML_P,
     TD_WIN_AUML_Q,
     TD_WIN_UUML_Y,
+    TD_MAC_O,
     //TD_WIN_SZLIG_S,
-    TD_MAC_OUML_O,
     // TD_MAC_AUML_A,
     // TD_MAC_UUML_U,
     // TD_MAC_SZLIG_S,
@@ -188,7 +219,7 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_WIN_OUML_P] = ACTION_TAP_DANCE_DOUBLE(KC_O, RALT(KC_P)),
     [TD_WIN_AUML_Q] = ACTION_TAP_DANCE_DOUBLE(KC_A, RALT(KC_Q)),
     [TD_WIN_UUML_Y] = ACTION_TAP_DANCE_DOUBLE(KC_U, RALT(KC_Y)),
-    [TD_MAC_OUML_O] = ACTION_TAP_DANCE_DOUBLE(KC_O, MAC_OUML_O),
+    [TD_MAC_OUML_O] = ACTION_TAP_DANCE_FN(mac_ouml_func),
     // [TD_MAC_AUML_A] = ACTION_TAP_DANCE_DOUBLE(KC_A, MAC_AUML_A),
     // [TD_MAC_UUML_U] = ACTION_TAP_DANCE_DOUBLE(KC_U, MAC_UUML_U),
 };
@@ -198,7 +229,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [MAC_BASE] = LAYOUT_69_ansi(
         KC_ESC,  KC_1,     KC_2,     KC_3,    KC_4,    KC_5,    KC_6,     KC_7,    KC_8,    KC_9,    KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,          KC_MUTE,
         KC_TAB,  KC_Q,     KC_W,     KC_F,    KC_P,    KC_G,    KC_J,     KC_L,    KC_U,    KC_Y,    KC_SCLN,     KC_LBRC,  KC_RBRC,  KC_BSLS,          KC_DEL,
-        KC_BSPC, KC_A,     KC_R,     KC_S,    KC_T,    KC_D,              KC_H,    KC_N,    KC_E,    KC_I,      TD(TD_MAC_OUML_O),  KC_QUOT,  KC_ENT,           KC_HOME,
+        KC_BSPC, KC_A,     KC_R,     KC_S,    KC_T,    KC_D,              KC_H,    KC_N,    KC_E,    KC_I,      TD(TD_MAC_O),  KC_QUOT,  KC_ENT,           KC_HOME,
         KC_LSFT,           KC_Z,     KC_X,    KC_C,    KC_V,    KC_B,     KC_B,    KC_K,    KC_M,    KC_COMM,  KC_DOT,   KC_SLSH,  KC_RSFT, KC_UP,
         KC_LCTL, KC_LOPTN, KC_LCMMD,          LT(MAC_FN1,KC_SPC),           MO(MAC_FN1), MO(FN2),        LT(MAC_FN1,KC_SPC),            KC_RCMMD,           KC_LEFT, KC_DOWN, KC_RGHT),
 
@@ -241,3 +272,53 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
     [FN2]      = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU)},
     };
 #endif // ENCODER_MAP_ENABLE
+
+// Determine the current tap dance state
+td_state_t cur_dance(tap_dance_state_t *state) {
+    if (state->count == 1) {
+        if (!state->pressed) return TD_MAC_OUML_O_SINGLE;
+    } else if (state->count == 2) return TD_MAC_OUML_O_DOUBLE;
+    else return TD_UNKNOWN;
+}
+
+// Initialize tap structure associated with example tap dance key
+static td_tap_t o_tap_state = {
+    .is_press_action = true,
+    .state = TD_NONE
+};
+
+// Functions that control what our tap dance key does
+void o_finished(tap_dance_state_t *state, void *user_data) {
+    o_tap_state.state = cur_dance(state);
+    switch (o_tap_state.state) {
+        case TD_MAC_OUML_O_SINGLE:
+            tap_code(KC_O);
+            break;
+        case TD_MAC_OUML_O_DOUBLE:
+
+            // Simulate pressing and holding Alt+U
+            register_code(KC_LALT);
+            register_code(KC_U);
+
+            // Release Alt+U
+            unregister_code(KC_LALT);
+            unregister_code(KC_U);
+
+            // Send the desired letter (e.g., 'A')
+            register_code(KC_O);
+            unregister_code(KC_O);
+            break;
+        default:
+            break;
+    }
+}
+
+void o_reset(tap_dance_state_t *state, void *user_data) {
+
+    ql_tap_state.state = TD_NONE;
+}
+
+// Associate our tap dance key with its functionality
+tap_dance_action_t tap_dance_actions[] = {
+    [TD_MAC_O] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, o_finished, o_reset)
+};
